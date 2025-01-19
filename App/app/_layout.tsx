@@ -36,7 +36,7 @@ export default function Layout() {
                         <TouchableOpacity
                             onPress={() => navigation.navigate('index')}
                         >
-                            <Text style={{ color: '#fff', fontSize: 20, fontWeight: 'bold' }}>
+                            <Text style={{ color: '#fff', fontSize: 20, fontWeight: 'bold', paddingLeft: 16 }}>
                                 E-Learning
                             </Text>
                         </TouchableOpacity>

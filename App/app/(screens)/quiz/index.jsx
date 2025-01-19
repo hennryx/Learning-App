@@ -1,92 +1,122 @@
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import SpaceBackground from '@/components/SpaceBackground'
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const Quiz = () => {
+    const [isOpenQuiz, setIsOpenQuiz] = useState(false)
+
+    const toggleStart = () => {
+        setIsOpenQuiz(prev => !prev)
+    }
+
     return (
         <View style={styles.container}>
             <SpaceBackground />
+            {isOpenQuiz ? (
+                <>
+                    <Text>Hey</Text>
+                    <TouchableOpacity
+                        key='science101'
+                        style={styles.button}
+                        onPress={() => toggleStart()}
+                    >
+                        <Text style={{
+                            color: "#fff",
+                            fontSize: screenWidth * 0.05,
+                            fontWeight: "bold",
+                            textAlign: "center"
+                        }}>
+                            Close
+                        </Text>
 
-            <Image
-                source={require('@/assets/homeAssets/atom.png')}
-                style={{
-                    position: "absolute",
-                    height: screenWidth * 0.15,
-                    width: screenWidth * 0.15,
-                    objectFit: "contain",
-                    top: "10%",
-                    left: "25%",
-                }}
-            />
+                    </TouchableOpacity>
+                </>
+            ) : (
+                <>
+                    <Image
+                        source={require('@/assets/homeAssets/atom.png')}
+                        style={{
+                            position: "absolute",
+                            height: screenWidth * 0.15,
+                            width: screenWidth * 0.15,
+                            objectFit: "contain",
+                            top: "10%",
+                            left: "25%",
+                        }}
+                    />
 
-            <View style={styles.circleContainer}>
+                    <View style={styles.circleContainer}>
 
-                <Image
-                    source={require('@/assets/homeAssets/hidding-boy.png')}
-                    style={{
-                        position: "absolute",
-                        height: screenHeight * 0.25,
-                        width: screenHeight * 0.2,
-                        objectFit: "contain",
-                        top: "0%",
-                        left: "-5%",
-                    }}
-                />
-                <Text style={styles.titleText}>Quiz Time!</Text>
-            </View>
+                        <Image
+                            source={require('@/assets/homeAssets/hidding-boy.png')}
+                            style={{
+                                position: "absolute",
+                                height: screenHeight * 0.25,
+                                width: screenHeight * 0.2,
+                                objectFit: "contain",
+                                top: "0%",
+                                left: "-5%",
+                            }}
+                        />
+                        <Text style={styles.titleText}>Quiz Time!</Text>
+                    </View>
 
-            <TouchableOpacity
-                key='science101'
-                style={styles.button}
-            >
-                <Text style={{
-                    color: "#fff",
-                    fontSize: screenWidth * 0.05,
-                    fontWeight: "bold",
-                    textAlign: "center"
-                }}>
-                    Start
-                </Text>
+                    <TouchableOpacity
+                        key='science101'
+                        style={styles.button}
+                        onPress={() => toggleStart()}
+                    >
+                        <Text style={{
+                            color: "#fff",
+                            fontSize: screenWidth * 0.05,
+                            fontWeight: "bold",
+                            textAlign: "center"
+                        }}>
+                            Start
+                        </Text>
 
-            </TouchableOpacity>
+                    </TouchableOpacity>
 
-            <Image
-                source={require('@/assets/homeAssets/space-boy.png')}
-                style={{
-                    position: "absolute",
-                    height: screenWidth * 0.5,
-                    width: screenWidth * 0.5,
-                    bottom: "12%",
-                    right: "0%",
-                    transform: "scaleX(-1)",
-                    rotate: '-30deg'
-                }}
-            />
+                    <Image
+                        source={require('@/assets/homeAssets/space-boy.png')}
+                        style={{
+                            position: "absolute",
+                            height: screenWidth * 0.5,
+                            width: screenWidth * 0.5,
+                            bottom: "12%",
+                            right: "0%",
+                            transform: "scaleX(-1)",
+                            rotate: '-30deg',
+                            zIndex: "-10"
+                        }}
+                    />
 
-            <Image
-                source={require('@/assets/homeAssets/red-double-ring-plannet.png')}
-                style={{
-                    position: "absolute",
-                    height: screenWidth * 0.2,
-                    width: screenWidth * 0.2,
-                    objectFit: "contain",
-                    bottom: "5%",
-                    right: "25%",
-                }}
-            />
+                    <Image
+                        source={require('@/assets/homeAssets/red-double-ring-plannet.png')}
+                        style={{
+                            position: "absolute",
+                            height: screenWidth * 0.2,
+                            width: screenWidth * 0.2,
+                            objectFit: "contain",
+                            bottom: "5%",
+                            right: "25%",
+                        }}
+                    />
 
-            <Image
-                source={require('@/assets/homeAssets/yellow-ring-plannet.png')}
-                style={{
-                    position: "absolute",
-                    height: screenWidth * 0.3,
-                    width: screenWidth * 0.3,
-                    objectFit: "contain",
-                    bottom: "0",
-                    left: "10%",
-                }}
-            />
+                    <Image
+                        source={require('@/assets/homeAssets/yellow-ring-plannet.png')}
+                        style={{
+                            position: "absolute",
+                            height: screenWidth * 0.3,
+                            width: screenWidth * 0.3,
+                            objectFit: "contain",
+                            bottom: "0",
+                            left: "10%",
+                        }}
+                    />
+                </>
+            )}
         </View>
     )
 }
