@@ -1,8 +1,8 @@
 import { View, ScrollView, Text, StyleSheet } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import Markdown from 'react-native-markdown-display';
-import { modules } from '../../../data/modules';
-import { useStore } from '../../../store/useStore';
+import { modules } from '../../../../data/modules';
+import { useStore } from '../../../../store/useStore';
 import { useEffect } from 'react';
 import SpaceBackground from '@/components/SpaceBackground';
 

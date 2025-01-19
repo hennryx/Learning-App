@@ -19,7 +19,7 @@ export default function Home() {
     const images = [
         {
             id: 1,
-            source: require('../assets/homeAssets/atom.png'),
+            source: require('@/assets/homeAssets/atom.png'),
             style: {
                 position: "absolute",
                 height: spaceshipSize,
@@ -30,7 +30,7 @@ export default function Home() {
         },
         {
             id: 2,
-            source: require('../assets/homeAssets/blue-plannet.png'),
+            source: require('@/assets/homeAssets/blue-plannet.png'),
             style: {
                 position: "absolute",
                 height: planetSize,
@@ -41,7 +41,7 @@ export default function Home() {
         },
         {
             id: 3,
-            source: require('../assets/homeAssets/purple-plannet.png'),
+            source: require('@/assets/homeAssets/purple-plannet.png'),
             style: {
                 position: "absolute",
                 height: planetSize,
@@ -52,7 +52,7 @@ export default function Home() {
         },
         {
             id: 4,
-            source: require('../assets/homeAssets/red-double-ring-plannet.png'),
+            source: require('@/assets/homeAssets/red-double-ring-plannet.png'),
             style: {
                 position: "absolute",
                 height: planetSize,
@@ -63,7 +63,7 @@ export default function Home() {
         },
         {
             id: 5,
-            source: require('../assets/homeAssets/red-plannet.png'),
+            source: require('@/assets/homeAssets/red-plannet.png'),
             style: {
                 position: "absolute",
                 height: planetSize,
@@ -74,7 +74,7 @@ export default function Home() {
         },
         {
             id: 6,
-            source: require('../assets/homeAssets/space-boy.png'),
+            source: require('@/assets/homeAssets/space-boy.png'),
             style: {
                 position: "absolute",
                 height: spaceBoySize,
@@ -86,7 +86,7 @@ export default function Home() {
         },
         {
             id: 7,
-            source: require('../assets/homeAssets/space-ship.png'),
+            source: require('@/assets/homeAssets/space-ship.png'),
             style: {
                 position: "absolute",
                 height: spaceshipSize,
@@ -98,7 +98,7 @@ export default function Home() {
         },
         {
             id: 9,
-            source: require('../assets/homeAssets/ufo.png'),
+            source: require('@/assets/homeAssets/ufo.png'),
             style: {
                 position: "absolute",
                 height: planetSize * 0.8,
@@ -110,7 +110,7 @@ export default function Home() {
         },
         {
             id: 10,
-            source: require('../assets/homeAssets/yellow-ring-plannet.png'),
+            source: require('@/assets/homeAssets/yellow-ring-plannet.png'),
             style: {
                 position: "absolute",
                 height: planetSize,
@@ -142,7 +142,7 @@ export default function Home() {
                     position: "relative"
                 }}>
                     <Image
-                        source={require('../assets/homeAssets/rocks.png')}
+                        source={require('@/assets/homeAssets/rocks.png')}
                         style={{
                             height: screenHeight * 0.12,
                             width: screenWidth * 0.22,
@@ -173,7 +173,7 @@ export default function Home() {
                         }}
                         onPress={() => {
                             setSelectedModule("science101")
-                            router.push(`/lesson/science101/1`)
+                            router.push(`/(screens)/lesson/science101/1`)
                         }}
                     >
                         <Text style={{

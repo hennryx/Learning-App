@@ -2,8 +2,11 @@ import { Drawer } from 'expo-router/drawer';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { CustomDrawerContent } from '../components/CustomDrawerContent';
 import { Ionicons } from '@expo/vector-icons';
+import { usePathname } from 'expo-router';
 
 export default function Layout() {
+
+    const currentPath = usePathname()
 
     return (
         <View style={{ flex: 1, backgroundColor: '#15026B' }}>
@@ -18,12 +21,16 @@ export default function Layout() {
                     },
                     headerTintColor: '#fff',
                     headerLeft: () => (
-                        <TouchableOpacity
-                            onPress={navigation.toggleDrawer}
-                            className="ml-4"
-                        >
-                            <Ionicons name="menu" size={35} color="#E06900" />
-                        </TouchableOpacity>
+                        <>
+                            {currentPath !== "/" && (
+                                <TouchableOpacity
+                                    onPress={navigation.toggleDrawer}
+                                    className="ml-4"
+                                >
+                                    <Ionicons name="menu" size={35} color="#E06900" />
+                                </TouchableOpacity>
+                            )}
+                        </>
                     ),
                     headerTitle: () => (
                         <TouchableOpacity
@@ -44,14 +51,6 @@ export default function Layout() {
                     options={{
                         title: 'E-Learning',
                         drawerLabel: 'Home',
-                    }}
-
-                />
-                <Drawer.Screen
-                    name="module/[id]"
-                    options={{
-                        title: 'E-Learning',
-                        drawerLabel: 'Module',
                     }}
                 />
                 <Drawer.Screen
