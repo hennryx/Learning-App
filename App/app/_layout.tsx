@@ -12,8 +12,8 @@ export default function Layout() {
                 screenOptions={({ navigation }) => ({
                     headerStyle: {
                         backgroundColor: '#15026B',
-                        elevation: 0, 
-                        shadowOpacity: 0, 
+                        elevation: 0,
+                        shadowOpacity: 0,
                         borderBottomWidth: 0,
                     },
                     headerTintColor: '#fff',
@@ -22,14 +22,14 @@ export default function Layout() {
                             onPress={navigation.toggleDrawer}
                             className="ml-4"
                         >
-                            <Ionicons name="menu" size={24} color="#E06900" />
+                            <Ionicons name="menu" size={35} color="#E06900" />
                         </TouchableOpacity>
                     ),
                     headerTitle: () => (
                         <TouchableOpacity
                             onPress={() => navigation.navigate('index')}
                         >
-                            <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold' }}>
+                            <Text style={{ color: '#fff', fontSize: 20, fontWeight: 'bold' }}>
                                 E-Learning
                             </Text>
                         </TouchableOpacity>
@@ -45,7 +45,7 @@ export default function Layout() {
                         title: 'E-Learning',
                         drawerLabel: 'Home',
                     }}
-                    
+
                 />
                 <Drawer.Screen
                     name="module/[id]"

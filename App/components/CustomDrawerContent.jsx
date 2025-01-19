@@ -1,53 +1,137 @@
 import { DrawerContentScrollView } from '@react-navigation/drawer';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { Link, useRouter } from 'expo-router';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useRouter, usePathname } from 'expo-router';
 import { modules } from '../data/modules';
 import { useStore } from '../store/useStore';
+import { Ionicons } from '@expo/vector-icons';
 
 export function CustomDrawerContent(props) {
-  const selectedModule = useStore((state) => state.selectedModule);
-  const setSelectedModule = useStore((state) => state.setSelectedModule);
-  const router = useRouter();
+    const selectedModule = useStore((state) => state.selectedModule);
+    const setSelectedModule = useStore((state) => state.setSelectedModule);
+    const router = useRouter();
+    const currentPath = usePathname();
 
-  return (
-    <DrawerContentScrollView {...props}>
-      <View className="p-5 border-b border-gray-200">
-        <Text className="text-xl font-bold">Learning Modules</Text>
-      </View>
-      
-      {Object.entries(modules).map(([moduleKey, moduleData]) => (
-        <View key={moduleKey}>
-          <TouchableOpacity
-            className={`p-4 border-b border-gray-100 ${
-              selectedModule === moduleKey ? 'bg-blue-50' : ''
-            }`}
-            onPress={() => {
-              setSelectedModule(
-                selectedModule === moduleKey ? null : moduleKey
-              );
-              router.push(`/module/${moduleKey}`);
-            }}
-          >
-            <Text className="text-base font-medium">{moduleData.title}</Text>
-          </TouchableOpacity>
+    const isLessonActive = (moduleKey, lessonId) => {
+        return currentPath === `/lesson/${moduleKey}/${lessonId}`;
+    };
 
-          {selectedModule === moduleKey && (
-            <View className="bg-gray-50">
-              {moduleData.lessons.map((lesson) => (
-                <Link
-                  key={lesson.id}
-                  href={`/lesson/${moduleKey}/${lesson.id}`}
-                  asChild
+    const isModuleActive = (moduleKey) => {
+        return currentPath === `/module/${moduleKey}` || currentPath.startsWith(`/lesson/${moduleKey}/`);
+    };
+
+    return (
+        <DrawerContentScrollView {...props} style={styles.container}>
+            <View style={styles.flexView}>
+                <Text style={styles.headerText}>EL</Text>
+                <TouchableOpacity
+                    onPress={() => props.navigation.closeDrawer()}
+                    style={styles.closeButton}
                 >
-                  <TouchableOpacity className="p-4 pl-8 border-b border-gray-100">
-                    <Text className="text-sm">{lesson.title}</Text>
-                  </TouchableOpacity>
-                </Link>
-              ))}
+                    <Ionicons name="close" size={35} color="#E06900" />
+                </TouchableOpacity>
             </View>
-          )}
-        </View>
-      ))}
-    </DrawerContentScrollView>
-  );
+
+            {Object.entries(modules).map(([moduleKey, moduleData]) => (
+                <View key={moduleKey}>
+                    <TouchableOpacity
+                        style={[
+                            styles.moduleButton,
+                            isModuleActive(moduleKey) && styles.activeModuleButton
+                        ]}
+                        onPress={() => {
+                            setSelectedModule(
+                                selectedModule === moduleKey ? null : moduleKey
+                            );
+                            router.push(`/module/${moduleKey}`);
+                        }}
+                    >
+                        <Text style={[
+                            styles.moduleText,
+                            isModuleActive(moduleKey) && styles.activeText
+                        ]}>
+                            {moduleData.title}
+                        </Text>
+                    </TouchableOpacity>
+
+                    {selectedModule === moduleKey && (
+                        <View style={styles.lessonContainer}>
+                            {moduleData.lessons.map((lesson) => (
+                                <TouchableOpacity
+                                    key={lesson.id}
+                                    style={[
+                                        styles.lessonButton,
+                                        isLessonActive(moduleKey, lesson.id) && styles.activeLessonButton
+                                    ]}
+                                    onPress={() => router.push(`/lesson/${moduleKey}/${lesson.id}`)}
+                                >
+                                    <Text style={[
+                                        styles.lessonText,
+                                        isLessonActive(moduleKey, lesson.id) && styles.activeText
+                                    ]}>
+                                        {lesson.title.split("# ")[1]}
+                                    </Text>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+                    )}
+                </View>
+            ))}
+        </DrawerContentScrollView>
+    );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#15026B',
+    },
+    flexView: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingVertical: 12,
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgba(255, 255, 255, 0.1)',
+    },
+    headerText: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#fff',
+    },
+    closeButton: {
+        padding: 8,
+    },
+    moduleButton: {
+        padding: 16,
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgba(255, 255, 255, 0.1)',
+    },
+    activeModuleButton: {
+        backgroundColor: 'rgba(224, 105, 0, 0.1)', // Slight orange tint for active module
+    },
+    moduleText: {
+        fontSize: 16,
+        fontWeight: '500',
+        color: '#fff',
+    },
+    lessonContainer: {
+        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    },
+    lessonButton: {
+        padding: 16,
+        paddingLeft: 32,
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgba(255, 255, 255, 0.1)',
+    },
+    activeLessonButton: {
+        backgroundColor: 'rgba(224, 105, 0, 0.1)', // Slight orange tint for active lesson
+    },
+    lessonText: {
+        fontSize: 14,
+        color: '#fff',
+    },
+    activeText: {
+        color: '#E06900', // Orange color for active text
+        fontWeight: '600',
+    },
+});

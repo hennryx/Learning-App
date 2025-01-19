@@ -1,18 +1,20 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { Link } from 'expo-router';
-import { modules } from '../data/modules';
+import { View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useStore } from '../store/useStore';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import SpaceBackground from '@/components/SpaceBackground';
+import { StatusBar } from 'expo-status-bar';
 
-function getRandomPosition() {
-    return {
-        top: `${Math.random() * 100}%`,
-        left: `${Math.random() * 100}%`,
-    };
-}
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export default function Home() {
     const setSelectedModule = useStore((state) => state.setSelectedModule);
+
+    const planetSize = screenWidth * 0.2;
+    const spaceshipSize = screenWidth * 0.12;
+    const spaceBoySize = screenWidth * 0.4;
+
+    const router = useRouter()
 
     const images = [
         {
@@ -20,10 +22,10 @@ export default function Home() {
             source: require('../assets/homeAssets/atom.png'),
             style: {
                 position: "absolute",
-                height: 48.1,
-                width: 50,
-                bottom: "10px",
-                left: "70px",
+                height: spaceshipSize,
+                width: spaceshipSize,
+                bottom: "5%",
+                left: "15%",
             }
         },
         {
@@ -31,150 +33,99 @@ export default function Home() {
             source: require('../assets/homeAssets/blue-plannet.png'),
             style: {
                 position: "absolute",
-                height: 80,
-                width: 80,
+                height: planetSize,
+                width: planetSize,
                 bottom: "50%",
-                right: "20px",
+                right: "5%",
+            }
+        },
+        {
+            id: 3,
+            source: require('../assets/homeAssets/purple-plannet.png'),
+            style: {
+                position: "absolute",
+                height: planetSize,
+                width: planetSize,
+                bottom: "30%",
+                left: "3%",
             }
         },
         {
             id: 4,
-            source: require('../assets/homeAssets/purple-plannet.png'),
+            source: require('../assets/homeAssets/red-double-ring-plannet.png'),
             style: {
                 position: "absolute",
-                height: 70,
-                width: 70,
-                bottom: "100px",
-                left: "20px",
+                height: planetSize,
+                width: planetSize,
+                top: "20%",
+                left: "10%",
             }
         },
         {
             id: 5,
-            source: require('../assets/homeAssets/red-double-ring-plannet.png'),
+            source: require('../assets/homeAssets/red-plannet.png'),
             style: {
                 position: "absolute",
-                height: 60,
-                width: 60,
-                top: "100px",
-                left: "60px",
+                height: planetSize,
+                width: planetSize,
+                bottom: "5%",
+                right: "20%",
             }
         },
         {
             id: 6,
-            source: require('../assets/homeAssets/red-plannet.png'),
+            source: require('../assets/homeAssets/space-boy.png'),
             style: {
                 position: "absolute",
-                height: 90,
-                width: 90,
-                bottom: "20px",
-                right: "90px",
+                height: spaceBoySize,
+                width: spaceBoySize,
+                top: "50%",
+                left: "50%",
+                transform: [{ translateX: -spaceBoySize / 2 }, { translateY: -spaceBoySize / 2 }]
             }
         },
         {
             id: 7,
-            source: require('../assets/homeAssets/shooting-star.png'),
+            source: require('../assets/homeAssets/space-ship.png'),
             style: {
                 position: "absolute",
-                height: 48.1,
-                width: 50,
-                ...getRandomPosition(),
-            },
-        },
-        {
-            id: 8,
-            source: require('../assets/homeAssets/shooting-star.png'),
-            style: {
-                position: "absolute",
-                height: 48.1,
-                width: 50,
-                ...getRandomPosition(),
-            },
+                height: spaceshipSize,
+                width: spaceshipSize,
+                bottom: "20%",
+                right: "15%",
+                transform: [{ rotate: '40deg' }]
+            }
         },
         {
             id: 9,
-            source: require('../assets/homeAssets/space-boy.png'),
+            source: require('../assets/homeAssets/ufo.png'),
             style: {
                 position: "absolute",
-                height: 160,
-                width: 160,
-                inset: 0,
-                transform: "translate(60%, 70%)"
+                height: planetSize * 0.8,
+                width: planetSize * 0.8,
+                top: "3%",
+                left: "15%",
+                transform: [{ rotate: '315deg' }]
             }
         },
         {
             id: 10,
-            source: require('../assets/homeAssets/space-ship.png'),
-            style: {
-                position: "absolute",
-                height: 48.1,
-                width: 50,
-                bottom: "90px",
-                right: "66px",
-                rotate: "40deg"
-            }
-        },
-        {
-            id: 11,
-            source: require('../assets/homeAssets/star-bright.png'),
-            style: {
-                position: "absolute",
-                height: 20,
-                width: 20,
-                top: "10px",
-                left: "20px",
-            }
-        },
-        {
-            id: 12,
-            source: require('../assets/homeAssets/star-deem.png'),
-            style: {
-                position: "absolute",
-                height: 20,
-                width: 20,
-                top: "20px",
-                left: "40px",
-            }
-        },
-        {
-            id: 13,
-            source: require('../assets/homeAssets/sun.png'),
-            style: {
-                position: "absolute",
-                height: 90,
-                width: 90,
-                top: "-20px",
-                right: "20px",
-                zIndex: "10"
-            }
-        },
-        {
-            id: 15,
-            source: require('../assets/homeAssets/ufo.png'),
-            style: {
-                position: "absolute",
-                height: 80,
-                width: 80,
-                top: "10px",
-                left: "60px",
-                rotate: "315deg"
-            }
-        },
-        {
-            id: 16,
             source: require('../assets/homeAssets/yellow-ring-plannet.png'),
             style: {
                 position: "absolute",
-                height: 100,
-                width: 100,
-                top: "50px",
-                right: "100px",
+                height: planetSize,
+                width: planetSize,
+                top: "10%",
+                right: "25%",
             }
         },
     ]
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#15026B' }}>
-            <View style={{ flex: 1, padding: 5, backgroundColor: '#15026B', height: "100%" }}>
+            <View style={{ flex: 1, padding: screenWidth * 0.01, backgroundColor: '#15026B', height: "100%" }}>
                 <View style={{ height: "60%", position: "relative" }}>
+                    <SpaceBackground />
                     {images.map((img) => (
                         <Image
                             key={img.id}
@@ -183,42 +134,60 @@ export default function Home() {
                         />
                     ))}
                 </View>
-                <View style={{ height: "40%", backgroundColor: "#280BA7", borderTopRightRadius: "2rem", borderTopLeftRadius: "2rem", position: "relative" }}>
+                <View style={{
+                    height: "40%",
+                    backgroundColor: "#280BA7",
+                    borderTopRightRadius: screenWidth * 0.08,
+                    borderTopLeftRadius: screenWidth * 0.08,
+                    position: "relative"
+                }}>
                     <Image
                         source={require('../assets/homeAssets/rocks.png')}
                         style={{
-                            height: 90,
-                            width: 80,
+                            height: screenHeight * 0.12,
+                            width: screenWidth * 0.22,
                             position: "absolute",
-                            top: "-40px",
-                            right: "0"
+                            top: screenHeight * -0.05,
+                            right: 0
                         }}
                     />
 
-                    <Text style={{ color: "#fff", fontSize: "1.5rem", fontWeight: "bold", margin: "auto", textAlign: "justify", lineHeight: "1.6" }}>Introduction to<br />Science 101</Text>
-
-                    <Link
+                    <Text style={{
+                        color: "#fff",
+                        fontSize: screenWidth * 0.08,
+                        fontWeight: "bold",
+                        margin: "auto",
+                        textAlign: "justify",
+                        lineHeight: screenWidth * 0.1
+                    }}>
+                        Introduction to{'\n'}Science 101
+                    </Text>
+                    <TouchableOpacity
                         key='science101'
-                        href={`/module/science101`}
-                        asChild
+                        style={{
+                            backgroundColor: "#E06900",
+                            paddingVertical: screenHeight * 0.015,
+                            paddingHorizontal: screenWidth * 0.05,
+                            borderRadius: screenWidth * 0.02,
+                            margin: "auto"
+                        }}
+                        onPress={() => {
+                            setSelectedModule("science101")
+                            router.push(`/lesson/science101/1`)
+                        }}
                     >
-                        <TouchableOpacity
-                            style={{
-                                backgroundColor: "#E06900",
-                                paddingVertical: 12,
-                                paddingHorizontal: 20,
-                                borderRadius: 8,
-                                margin: "auto"
-                            }}
-                            onPress={() => setSelectedModule("science101")}
-                        >
-                            <Text style={{ color: "#fff", fontSize: 16, fontWeight: "bold", textAlign: "center" }}>
-                                Get Started
-                            </Text>
-                        </TouchableOpacity>
-                    </Link>
+                        <Text style={{
+                            color: "#fff",
+                            fontSize: screenWidth * 0.04,
+                            fontWeight: "bold",
+                            textAlign: "center"
+                        }}>
+                            Get Started
+                        </Text>
+                    </TouchableOpacity>
                 </View>
             </View>
+            <StatusBar style='dark'/>
         </SafeAreaView>
     );
 }
