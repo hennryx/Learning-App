@@ -283,20 +283,32 @@ const Quiz = () => {
     if (quizState === 'result') {
         return (
             <View style={styles.container}>
+                <SpaceBackground />
                 <Text style={styles.resultText}>Quiz Complete!</Text>
                 <Text style={styles.scoreText}>
                     Your Score: {score} out of {questions.length}
                 </Text>
-                <Text style={styles.percentageText}>
+                <Text style={[styles.percentageText, { color: `${((score / questions.length) * 100).toFixed(1) > 75 ? '#13EB2C' : '#EB1316'}` }]}>
                     Percentage: {((score / questions.length) * 100).toFixed(1)}%
                 </Text>
                 <TouchableOpacity
+                    style={[styles.button, {
+                        marginTop: '1rem'
+                    }]}
                     onPress={() => {
                         router.push("/")
                         setQuizState('initial')
                     }}
                 >
-                    <Text>Go back Home</Text>
+                    <Text style={{
+                        color: "#fff",
+                        fontSize: screenWidth * 0.04,
+                        fontWeight: "bold",
+                        textAlign: "center"
+                    }}
+                    >
+                        Go back Home
+                    </Text>
                 </TouchableOpacity>
             </View>
         );
@@ -342,10 +354,12 @@ const Quiz = () => {
 
 const styles = StyleSheet.create({
     container: {
+        position: "relative",
         flex: 1,
         padding: 20,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: "#15026B",
     },
     startButton: {
         backgroundColor: '#4CAF50',
@@ -437,14 +451,15 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 20,
+        color: "#fff"
     },
     scoreText: {
         fontSize: 20,
         marginBottom: 10,
+        color: "#fff"
     },
     percentageText: {
         fontSize: 18,
-        color: '#666',
     },
     titleText: {
         color: "#fff",
