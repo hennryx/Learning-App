@@ -164,7 +164,8 @@ const Quiz = () => {
                             isAnswerSubmitted &&
                             (selectedAnswer?.toLowerCase() === currentQuestion.correctAnswer.toLowerCase()
                                 ? styles.correctAnswer
-                                : styles.wrongAnswer)
+                                : styles.wrongAnswer),
+                            {color: '#fff'}
                         ]}
                         value={selectedAnswer || ''}
                         onChangeText={handleAnswer}
@@ -296,7 +297,7 @@ const Quiz = () => {
                         marginTop: '1rem'
                     }]}
                     onPress={() => {
-                        router.push("/")
+                        router.push("/lesson/science101/1")
                         setQuizState('initial')
                     }}
                 >
@@ -307,7 +308,7 @@ const Quiz = () => {
                         textAlign: "center"
                     }}
                     >
-                        Go back Home
+                        Go back
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -327,7 +328,7 @@ const Quiz = () => {
 
             {showFeedback && (
                 <View style={styles.feedbackContainer}>
-                    <Text style={styles.feedbackText}>
+                    <Text style={[styles.feedbackText, { color: isAnswerCorrect ? '#13EB2C' : '#EB1316' }]}>
                         {isAnswerCorrect()
                             ? "Correct!"
                             : `Incorrect. The correct answer is: ${getCorrectAnswerDisplay()}`}
@@ -386,6 +387,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 20,
         textAlign: 'center',
+        color: "#fff"
     },
     optionsContainer: {
         width: '100%',
