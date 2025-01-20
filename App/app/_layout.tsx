@@ -54,7 +54,7 @@ export default function Layout() {
                     }}
                 />
                 <Drawer.Screen
-                    name="lesson/[moduleId]/[lessonId]"
+                    name="(screens)/lesson/[moduleId]/[lessonId]"
                     options={{
                         title: 'E-Learning',
                         drawerLabel: 'Lesson',
