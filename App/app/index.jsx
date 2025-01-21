@@ -4,6 +4,7 @@ import { useStore } from '../store/useStore';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SpaceBackground from '@/components/SpaceBackground';
 import { StatusBar } from 'expo-status-bar';
+import { getComputedScreenHeight } from '@/hooks/useFunction';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -15,6 +16,7 @@ export default function Home() {
     const spaceBoySize = screenWidth * 0.4;
 
     const router = useRouter()
+    getComputedScreenHeight();
 
     const images = [
         {
@@ -187,7 +189,7 @@ export default function Home() {
                     </TouchableOpacity>
                 </View>
             </View>
-            <StatusBar style='dark'/>
+            <StatusBar style='dark' />
         </SafeAreaView>
     );
 }

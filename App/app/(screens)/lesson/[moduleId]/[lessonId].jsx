@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     section: {
-        backgroundColor: 'rgba(0, 0, 0, 0.78)',
+        backgroundColor: 'rgba(0, 0, 0, 0.50)',
         borderRadius: 8,
         padding: 16,
     },

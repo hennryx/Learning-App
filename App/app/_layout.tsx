@@ -6,7 +6,7 @@ import { usePathname } from 'expo-router';
 
 export default function Layout() {
 
-    const currentPath = usePathname()
+    const currentPath = usePathname();
 
     return (
         <View style={{ flex: 1, backgroundColor: '#15026B' }}>

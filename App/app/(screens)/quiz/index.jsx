@@ -165,7 +165,7 @@ const Quiz = () => {
                             (selectedAnswer?.toLowerCase() === currentQuestion.correctAnswer.toLowerCase()
                                 ? styles.correctAnswer
                                 : styles.wrongAnswer),
-                            {color: '#fff'}
+                            { color: '#fff' }
                         ]}
                         value={selectedAnswer || ''}
                         onChangeText={handleAnswer}
@@ -275,30 +275,40 @@ const Quiz = () => {
 
     if (quizState === 'countdown') {
         return (
-            <View style={styles.container}>
-                <Text style={styles.countdownText}>{countdown}</Text>
+            <View style={[styles.container, styles.containerInitial, { position: 'relative' }]}>
+                <SpaceBackground />
+                <View style={styles.circleContainer}>
+                    <Text style={styles.countdownText}>{countdown}</Text>
+                </View>
             </View>
         );
     }
 
     if (quizState === 'result') {
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, styles.containerInitial, { position: 'relative' }]}>
                 <SpaceBackground />
-                <Text style={styles.resultText}>Quiz Complete!</Text>
-                <Text style={styles.scoreText}>
-                    Your Score: {score} out of {questions.length}
-                </Text>
-                <Text style={[styles.percentageText, { color: `${((score / questions.length) * 100).toFixed(1) > 75 ? '#13EB2C' : '#EB1316'}` }]}>
-                    Percentage: {((score / questions.length) * 100).toFixed(1)}%
-                </Text>
+                <View style={styles.circleContainer}>
+                    <Text style={styles.resultText}>Quiz Complete!</Text>
+                    <Text style={styles.scoreText}>
+                        Your Score: {score} out of {questions.length}
+                    </Text>
+                    <Text style={[styles.percentageText, { color: `${((score / questions.length) * 100).toFixed(1) > 75 ? '#13EB2C' : '#EB1316'}` }]}>
+                        Percentage: {((score / questions.length) * 100).toFixed(1)}%
+                    </Text>
+                </View>
+
                 <TouchableOpacity
                     style={[styles.button, {
                         marginTop: '1rem'
                     }]}
                     onPress={() => {
-                        router.push("/lesson/science101/1")
-                        setQuizState('initial')
+                        /* router.push("/lesson/science101/1") */
+                        setQuizState('initial');
+                        setCurrentQuestionIndex(0)
+                        setSelectedAnswer(null);
+                        setShowFeedback(false);
+                        setIsAnswerSubmitted(false);
                     }}
                 >
                     <Text style={{
@@ -328,7 +338,7 @@ const Quiz = () => {
 
             {showFeedback && (
                 <View style={styles.feedbackContainer}>
-                    <Text style={[styles.feedbackText, { color: isAnswerCorrect ? '#13EB2C' : '#EB1316' }]}>
+                    <Text style={[styles.feedbackText, { color: isAnswerCorrect() ? '#22c55e' : '#ef4444' }]}>
                         {isAnswerCorrect()
                             ? "Correct!"
                             : `Incorrect. The correct answer is: ${getCorrectAnswerDisplay()}`}
@@ -375,7 +385,7 @@ const styles = StyleSheet.create({
     countdownText: {
         fontSize: 72,
         fontWeight: 'bold',
-        color: '#333',
+        color: '#fff',
     },
     questionNumber: {
         fontSize: 16,
@@ -404,10 +414,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#90CAF9',
     },
     correctAnswer: {
-        backgroundColor: '#A5D6A7',  // Light green
+        backgroundColor: '#16a34a',  // Light green
     },
     wrongAnswer: {
-        backgroundColor: '#EF9A9A',  // Light red
+        backgroundColor: '#dc2626',  // Light red
     },
     optionText: {
         fontSize: 16,
@@ -442,12 +452,11 @@ const styles = StyleSheet.create({
         marginTop: 20,
         padding: 15,
         borderRadius: 8,
-        backgroundColor: '#f8f8f8',
+        /* backgroundColor: '#94a3b8', */
     },
     feedbackText: {
         fontSize: 16,
         textAlign: 'center',
-        color: '#333',
     },
     resultText: {
         fontSize: 24,
