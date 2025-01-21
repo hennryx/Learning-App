@@ -162,7 +162,7 @@ export default function Home() {
                         textAlign: "justify",
                         lineHeight: screenWidth * 0.1
                     }}>
-                        Introduction to{'\n'}Science 101
+                        Introduction to{'\n'}Science{'\n'}<Text style={{color: "#fff", fontSize: screenWidth * 0.05}}>Quarter 1 – Module 1</Text>
                     </Text>
                     <TouchableOpacity
                         key='science101'
