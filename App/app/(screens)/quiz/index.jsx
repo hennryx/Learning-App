@@ -162,7 +162,7 @@ const Quiz = () => {
                         style={[
                             styles.input,
                             isAnswerSubmitted &&
-                            (selectedAnswer?.toLowerCase() === currentQuestion.correctAnswer.toLowerCase()
+                            (selectedAnswer?.trim().toLowerCase() === currentQuestion.correctAnswer.trim().toLowerCase()
                                 ? styles.correctAnswer
                                 : styles.wrongAnswer),
                             { color: '#fff' }
@@ -176,9 +176,10 @@ const Quiz = () => {
         }
     };
 
-    const renderInitialScreen = () => {
+    if (quizState === 'initial') {
         return (
-            <>
+            <View style={styles.containerInitial}>
+                <SpaceBackground />
                 <Image
                     source={require('@/assets/homeAssets/atom.png')}
                     style={{
@@ -207,6 +208,19 @@ const Quiz = () => {
                     <Text style={styles.titleText}>Quiz Time!</Text>
                 </View>
 
+                <Image
+                    source={require('@/assets/homeAssets/space-boy.png')}
+                    style={{
+                        position: "absolute",
+                        height: screenWidth * 0.5,
+                        width: screenWidth * 0.5,
+                        bottom: "12%",
+                        right: "0%",
+                        transform: "scaleX(-1)",
+                        rotate: '-30deg',
+                    }}
+                />
+
                 <TouchableOpacity
                     key='science101'
                     style={styles.button}
@@ -222,20 +236,6 @@ const Quiz = () => {
                     </Text>
 
                 </TouchableOpacity>
-
-                <Image
-                    source={require('@/assets/homeAssets/space-boy.png')}
-                    style={{
-                        position: "absolute",
-                        height: screenWidth * 0.5,
-                        width: screenWidth * 0.5,
-                        bottom: "12%",
-                        right: "0%",
-                        transform: "scaleX(-1)",
-                        rotate: '-30deg',
-                        zIndex: "-10"
-                    }}
-                />
 
                 <Image
                     source={require('@/assets/homeAssets/red-double-ring-plannet.png')}
@@ -260,15 +260,6 @@ const Quiz = () => {
                         left: "10%",
                     }}
                 />
-            </>
-        )
-    }
-
-    if (quizState === 'initial') {
-        return (
-            <View style={styles.containerInitial}>
-                <SpaceBackground />
-                {renderInitialScreen()}
             </View>
         );
     }
