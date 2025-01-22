@@ -166,7 +166,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#15026B',
     },
     contentContainer: {
-        gap: 10,
         paddingBottom: 80,
     },
     section: {
@@ -293,7 +292,7 @@ const markdownStyles = StyleSheet.create({
         color: '#E06900',
         textDecorationLine: 'underline',
     },
-    strong: {
+    /* strong: {
         color: '#fff',
         fontWeight: 'bold',
     },
@@ -303,7 +302,7 @@ const markdownStyles = StyleSheet.create({
         borderLeftWidth: 4,
         paddingHorizontal: 10,
         paddingVertical: 5,
-    },
+    }, */
     code_inline: {
         color: '#fff',
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
@@ -351,10 +350,6 @@ const markdownStyles = StyleSheet.create({
         color: '#fff',
         fontStyle: 'italic',
     },
-    strong: {
-        color: '#fff',
-        fontWeight: 'bold',
-    },
     del: {
         color: '#fff',
         textDecorationLine: 'line-through',
@@ -363,43 +358,5 @@ const markdownStyles = StyleSheet.create({
         maxWidth: '100%',
         height: 200,
         resizeMode: 'contain',
-    },
-
-    // New styles for custom boxes
-
-    blockquote: {
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        borderLeftColor: '#E06900',
-        borderLeftWidth: 4,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        marginVertical: 10,
-    },
-
-    customBox: {
-        backgroundColor: 'rgba(0, 0, 0, 0.3)',
-        borderRadius: 8,
-        padding: 15,
-        marginVertical: 10,
-        borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.2)',
-    },
-
-    infoBox: {
-        backgroundColor: 'rgba(0, 100, 255, 0.1)',
-        borderRadius: 8,
-        padding: 15,
-        marginVertical: 10,
-        borderWidth: 1,
-        borderColor: '#0064FF',
-    },
-
-    warningBox: {
-        backgroundColor: 'rgba(255, 165, 0, 0.1)',
-        borderRadius: 8,
-        padding: 15,
-        marginVertical: 10,
-        borderWidth: 1,
-        borderColor: '#FFA500',
-    },
+    }
 });

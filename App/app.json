@@ -1,15 +1,16 @@
 {
   "expo": {
-    "name": "Science Lab",
+    "name": "App",
     "slug": "App",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo2.png",
+    "icon": "./assets/images/logo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hennryx.App"
     },
     "android": {
       "adaptiveIcon": {
@@ -43,14 +44,11 @@
         "origin": false
       },
       "eas": {
-        "projectId": "dc32ea84-e0dc-4de5-a433-bfe1f53e2469"
+        "projectId": "95285387-6850-47c1-b43e-c65badfd0012"
       }
     },
     "runtimeVersion": {
       "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/dc32ea84-e0dc-4de5-a433-bfe1f53e2469"
     }
   }
 }
