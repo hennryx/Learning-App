@@ -67,12 +67,8 @@ export default function LessonScreen() {
             return (
                 <TouchableOpacity
                     key={node.key}
-                    onPress={() => {
-                        console.log('Image pressed');
-                        handleImagePress(source);
-                    }}
+                    onPress={() => handleImagePress(source)}
                     style={styles.lessonImage}
-
                 >
                     <Image
                         source={source}

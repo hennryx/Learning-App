@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image, Dimensions } from 'react-native';
 import { scienceQuiz } from '@/data/questions';
-import { useRouter } from 'expo-router';
 import SpaceBackground from '@/components/SpaceBackground'
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
@@ -14,7 +13,6 @@ const Quiz = () => {
     const [showFeedback, setShowFeedback] = useState(false);
     const [questions, setQuestions] = useState([]);
     const [isAnswerSubmitted, setIsAnswerSubmitted] = useState(false);
-    const router = useRouter()
 
     useEffect(() => {
         const shuffledQuestions = [...scienceQuiz].sort(() => Math.random() - 0.5);

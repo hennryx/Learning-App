@@ -1,5 +1,5 @@
 import { DrawerContentScrollView } from '@react-navigation/drawer';
-import { View, Text, TouchableOpacity, StyleSheet, Animated, Easing } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Animated, Easing, SafeAreaView, FlatList } from 'react-native';
 import { useRouter, usePathname } from 'expo-router';
 import { modules } from '../data/modules';
 import { useStore } from '../store/useStore';
@@ -94,31 +94,37 @@ export function CustomDrawerContent(props) {
                     {openDropdowns[moduleKey] && (
                         <Animated.View style={{ height: dropdownHeights[moduleKey], overflow: "hidden" }}>
                             <View style={styles.lessonContainer}>
-                                {moduleData.lessons.map((lesson) => (
-                                    <TouchableOpacity
-                                        key={lesson.id}
-                                        style={[
-                                            styles.lessonButton,
-                                            isLessonActive(moduleKey, lesson.id) &&
-                                            styles.activeLessonButton,
-                                        ]}
-                                        onPress={() =>
-                                            router.push(
-                                                `/lesson/${moduleKey}/${lesson.id}`
-                                            )
-                                        }
-                                    >
-                                        <Text
-                                            style={[
-                                                styles.lessonText,
-                                                isLessonActive(moduleKey, lesson.id) &&
-                                                styles.activeText,
-                                            ]}
-                                        >
-                                            {lesson.title.split("# ")[1]}
-                                        </Text>
-                                    </TouchableOpacity>
-                                ))}
+                                <SafeAreaView>
+                                    <FlatList
+                                        data={moduleData.lessons}
+                                        keyExtractor={(lesson) => lesson.id.toString()}
+                                        renderItem={({ item: lesson }) => (
+                                            <TouchableOpacity
+                                                key={lesson.id}
+                                                style={[
+                                                    styles.lessonButton,
+                                                    isLessonActive(moduleKey, lesson.id) &&
+                                                    styles.activeLessonButton,
+                                                ]}
+                                                onPress={() =>
+                                                    router.push(
+                                                        `/lesson/${moduleKey}/${lesson.id}`
+                                                    )
+                                                }
+                                            >
+                                                <Text
+                                                    style={[
+                                                        styles.lessonText,
+                                                        isLessonActive(moduleKey, lesson.id) &&
+                                                        styles.activeText,
+                                                    ]}
+                                                >
+                                                    {lesson.title.split("# ")[1]}
+                                                </Text>
+                                            </TouchableOpacity>
+                                        )}
+                                    />
+                                </SafeAreaView>
                             </View>
                         </Animated.View>
                     )}
@@ -182,6 +188,7 @@ const styles = StyleSheet.create({
     },
     lessonContainer: {
         backgroundColor: "rgba(255, 255, 255, 0.05)",
+        overflowY: "scroll"
     },
     lessonButton: {
         padding: 16,
