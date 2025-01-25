@@ -94,37 +94,31 @@ export function CustomDrawerContent(props) {
                     {openDropdowns[moduleKey] && (
                         <Animated.View style={{ height: dropdownHeights[moduleKey], overflow: "hidden" }}>
                             <View style={styles.lessonContainer}>
-                                <SafeAreaView>
-                                    <FlatList
-                                        data={moduleData.lessons}
-                                        keyExtractor={(lesson) => lesson.id.toString()}
-                                        renderItem={({ item: lesson }) => (
-                                            <TouchableOpacity
-                                                key={lesson.id}
-                                                style={[
-                                                    styles.lessonButton,
-                                                    isLessonActive(moduleKey, lesson.id) &&
-                                                    styles.activeLessonButton,
-                                                ]}
-                                                onPress={() =>
-                                                    router.push(
-                                                        `/lesson/${moduleKey}/${lesson.id}`
-                                                    )
-                                                }
-                                            >
-                                                <Text
-                                                    style={[
-                                                        styles.lessonText,
-                                                        isLessonActive(moduleKey, lesson.id) &&
-                                                        styles.activeText,
-                                                    ]}
-                                                >
-                                                    {lesson.title.split("# ")[1]}
-                                                </Text>
-                                            </TouchableOpacity>
-                                        )}
-                                    />
-                                </SafeAreaView>
+                                {moduleData.lessons.map((lesson) => (
+                                    <TouchableOpacity
+                                        key={lesson.id}
+                                        style={[
+                                            styles.lessonButton,
+                                            isLessonActive(moduleKey, lesson.id) &&
+                                            styles.activeLessonButton,
+                                        ]}
+                                        onPress={() =>
+                                            router.push(
+                                                `/lesson/${moduleKey}/${lesson.id}`
+                                            )
+                                        }
+                                    >
+                                        <Text
+                                            style={[
+                                                styles.lessonText,
+                                                isLessonActive(moduleKey, lesson.id) &&
+                                                styles.activeText,
+                                            ]}
+                                        >
+                                            {lesson.title.split("# ")[1]}
+                                        </Text>
+                                    </TouchableOpacity>
+                                ))}
                             </View>
                         </Animated.View>
                     )}
