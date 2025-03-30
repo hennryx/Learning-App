@@ -1,3 +1,4 @@
+import React from 'react';
 import { Stack, useRouter } from 'expo-router';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 

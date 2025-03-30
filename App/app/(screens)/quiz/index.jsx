@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image, Dimensions } from 'react-native';
 import { scienceQuiz } from '@/data/questions';
-import SpaceBackground from '@/components/SpaceBackground'
+import SpaceBackground from '@/components/SpaceBackground';
+import { useTheme } from '@/components/ThemeContext';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const Quiz = () => {
@@ -13,6 +14,8 @@ const Quiz = () => {
     const [showFeedback, setShowFeedback] = useState(false);
     const [questions, setQuestions] = useState([]);
     const [isAnswerSubmitted, setIsAnswerSubmitted] = useState(false);
+    const { colors, isDarkMode } = useTheme();
+    
 
     useEffect(() => {
         const shuffledQuestions = [...scienceQuiz].sort(() => Math.random() - 0.5);
@@ -98,6 +101,159 @@ const Quiz = () => {
         }
     };
 
+
+    const styles = StyleSheet.create({
+        container: {
+            position: "relative",
+            flex: 1,
+            padding: 20,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: isDarkMode 
+            ? 'rgba(21, 2, 107, 0.95)' 
+            : 'rgba(255, 255, 255, 0.95)',
+        },
+        startButton: {
+            backgroundColor: '#4CAF50',
+            padding: 15,
+            borderRadius: 8,
+        },
+        startButtonText: {
+            color: 'white',
+            fontSize: 18,
+            fontWeight: 'bold',
+        },
+        countdownText: {
+            fontSize: 72,
+            fontWeight: 'bold',
+            color: colors.text,
+        },
+        questionNumber: {
+            fontSize: 16,
+            color: '#666',
+            marginBottom: 10,
+        },
+        questionText: {
+            fontSize: 20,
+            fontWeight: 'bold',
+            marginBottom: 20,
+            textAlign: 'center',
+            color: colors.text
+        },
+        optionsContainer: {
+            width: '100%',
+            marginBottom: 20,
+        },
+        optionButton: {
+            backgroundColor: '#f0f0f0',
+            padding: 15,
+            borderRadius: 8,
+            marginVertical: 5,
+            width: '100%',
+        },
+        selectedOption: {
+            backgroundColor: '#90CAF9',
+        },
+        correctAnswer: {
+            backgroundColor: '#16a34a',  // Light green
+        },
+        wrongAnswer: {
+            backgroundColor: '#dc2626',  // Light red
+        },
+        optionText: {
+            fontSize: 16,
+            textAlign: 'center',
+        },
+        input: {
+            width: '100%',
+            height: 40,
+            borderWidth: 1,
+            borderColor: '#ddd',
+            borderRadius: 8,
+            paddingHorizontal: 10,
+            marginBottom: 20,
+        },
+        nextButton: {
+            backgroundColor: '#2196F3',
+            padding: 15,
+            borderRadius: 8,
+            width: '100%',
+            marginTop: 20,
+        },
+        disabledButton: {
+            backgroundColor: '#cccccc',
+        },
+        nextButtonText: {
+            color: 'white',
+            fontSize: 16,
+            fontWeight: 'bold',
+            textAlign: 'center',
+        },
+        feedbackContainer: {
+            marginTop: 20,
+            padding: 15,
+            borderRadius: 8,
+        },
+        feedbackText: {
+            fontSize: 16,
+            textAlign: 'center',
+        },
+        resultText: {
+            fontSize: 24,
+            fontWeight: 'bold',
+            marginBottom: 20,
+            color: colors.text
+        },
+        scoreText: {
+            fontSize: 20,
+            marginBottom: 10,
+            color: colors.text
+        },
+        percentageText: {
+            fontSize: 18,
+        },
+        titleText: {
+            color: colors.text,
+            fontSize: screenWidth * 0.07,
+            fontWeight: "bold",
+            textAlign: "center",
+            marginTop: '20%',
+            marginLeft: '10%',
+            textShadow: '2px 2px 5px black'
+        },
+        circleContainer: {
+            position: "relative",
+            borderRadius: "50%",
+            height: screenHeight / 3,
+            width: screenHeight / 3,
+            backgroundColor: isDarkMode 
+            ? "#280BA7" 
+            : '#a7a7a7',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+        },
+        button: {
+            backgroundColor: "#E06900",
+            paddingVertical: screenHeight * 0.015,
+            paddingHorizontal: screenWidth * 0.12,
+            borderRadius: screenWidth * 0.02,
+            boxShadow: '0 8px 10px rgba(0, 0, 0, 0.25)'
+        },
+        containerInitial: {
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: isDarkMode 
+            ? 'rgba(21, 2, 107, 0.95)' 
+            : 'rgba(255, 255, 255, 0.95)',
+            position: "relative",
+            gap: 20
+        },
+    });
+
     const renderQuestion = () => {
         const currentQuestion = questions[currentQuestionIndex];
 
@@ -163,7 +319,7 @@ const Quiz = () => {
                             (selectedAnswer?.trim().toLowerCase() === currentQuestion.correctAnswer.trim().toLowerCase()
                                 ? styles.correctAnswer
                                 : styles.wrongAnswer),
-                            { color: '#fff' }
+                            { color: colors.text }
                         ]}
                         value={selectedAnswer || ''}
                         onChangeText={handleAnswer}
@@ -225,7 +381,7 @@ const Quiz = () => {
                     onPress={startQuiz}
                 >
                     <Text style={{
-                        color: "#fff",
+                        color: colors.text,
                         fontSize: screenWidth * 0.05,
                         fontWeight: "bold",
                         textAlign: "center"
@@ -301,7 +457,7 @@ const Quiz = () => {
                     }}
                 >
                     <Text style={{
-                        color: "#fff",
+                        color: colors.text,
                         fontSize: screenWidth * 0.04,
                         fontWeight: "bold",
                         textAlign: "center"
@@ -352,151 +508,6 @@ const Quiz = () => {
 };
 
 
-const styles = StyleSheet.create({
-    container: {
-        position: "relative",
-        flex: 1,
-        padding: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: "#15026B",
-    },
-    startButton: {
-        backgroundColor: '#4CAF50',
-        padding: 15,
-        borderRadius: 8,
-    },
-    startButtonText: {
-        color: 'white',
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    countdownText: {
-        fontSize: 72,
-        fontWeight: 'bold',
-        color: '#fff',
-    },
-    questionNumber: {
-        fontSize: 16,
-        color: '#666',
-        marginBottom: 10,
-    },
-    questionText: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        textAlign: 'center',
-        color: "#fff"
-    },
-    optionsContainer: {
-        width: '100%',
-        marginBottom: 20,
-    },
-    optionButton: {
-        backgroundColor: '#f0f0f0',
-        padding: 15,
-        borderRadius: 8,
-        marginVertical: 5,
-        width: '100%',
-    },
-    selectedOption: {
-        backgroundColor: '#90CAF9',
-    },
-    correctAnswer: {
-        backgroundColor: '#16a34a',  // Light green
-    },
-    wrongAnswer: {
-        backgroundColor: '#dc2626',  // Light red
-    },
-    optionText: {
-        fontSize: 16,
-        textAlign: 'center',
-    },
-    input: {
-        width: '100%',
-        height: 40,
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 8,
-        paddingHorizontal: 10,
-        marginBottom: 20,
-    },
-    nextButton: {
-        backgroundColor: '#2196F3',
-        padding: 15,
-        borderRadius: 8,
-        width: '100%',
-        marginTop: 20,
-    },
-    disabledButton: {
-        backgroundColor: '#cccccc',
-    },
-    nextButtonText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    feedbackContainer: {
-        marginTop: 20,
-        padding: 15,
-        borderRadius: 8,
-        /* backgroundColor: '#94a3b8', */
-    },
-    feedbackText: {
-        fontSize: 16,
-        textAlign: 'center',
-    },
-    resultText: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        color: "#fff"
-    },
-    scoreText: {
-        fontSize: 20,
-        marginBottom: 10,
-        color: "#fff"
-    },
-    percentageText: {
-        fontSize: 18,
-    },
-    titleText: {
-        color: "#fff",
-        fontSize: screenWidth * 0.07,
-        fontWeight: "bold",
-        textAlign: "center",
-        marginTop: '20%',
-        marginLeft: '10%',
-        textShadow: '2px 2px 5px black'
-    },
-    circleContainer: {
-        position: "relative",
-        borderRadius: "50%",
-        height: screenHeight / 3,
-        width: screenHeight / 3,
-        backgroundColor: "#280BA7",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    button: {
-        backgroundColor: "#E06900",
-        paddingVertical: screenHeight * 0.015,
-        paddingHorizontal: screenWidth * 0.12,
-        borderRadius: screenWidth * 0.02,
-        boxShadow: '0 8px 10px rgba(0, 0, 0, 0.25)'
-    },
-    containerInitial: {
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#15026B",
-        position: "relative",
-        gap: 20
-    },
-});
+
 
 export default Quiz;

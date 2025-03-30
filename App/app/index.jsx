@@ -1,3 +1,4 @@
+import React from 'react';
 import { View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useStore } from '../store/useStore';
@@ -5,17 +6,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import SpaceBackground from '@/components/SpaceBackground';
 import { StatusBar } from 'expo-status-bar';
 import { getComputedScreenHeight } from '@/hooks/useFunction';
+import { useTheme } from '@/components/ThemeContext';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export default function Home() {
     const setSelectedModule = useStore((state) => state.setSelectedModule);
+    const { colors, isDarkMode } = useTheme();
 
     const planetSize = screenWidth * 0.2;
     const spaceshipSize = screenWidth * 0.12;
     const spaceBoySize = screenWidth * 0.4;
 
-    const router = useRouter()
+    const router = useRouter()  
     getComputedScreenHeight();
 
     const images = [
@@ -124,8 +127,13 @@ export default function Home() {
     ]
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#15026B' }}>
-            <View style={{ flex: 1, padding: screenWidth * 0.01, backgroundColor: '#15026B', height: "100%" }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: isDarkMode 
+            ? '#15026b' 
+            : '#ffffff',}}>
+            
+            <View style={{ flex: 1, padding: screenWidth * 0.01, backgroundColor: isDarkMode 
+            ? '#15026b' 
+            : '#ffffff', height: "100%" }}>
                 <View style={{ height: "60%", position: "relative" }}>
                     <SpaceBackground />
                     {images.map((img) => (
@@ -138,7 +146,7 @@ export default function Home() {
                 </View>
                 <View style={{
                     height: "40%",
-                    backgroundColor: "#280BA7",
+                    backgroundColor: isDarkMode ? "#280BA7" : "#d9d9d9",
                     borderTopRightRadius: screenWidth * 0.08,
                     borderTopLeftRadius: screenWidth * 0.08,
                     position: "relative"
@@ -155,14 +163,14 @@ export default function Home() {
                     />
 
                     <Text style={{
-                        color: "#fff",
+                        color: colors.text,
                         fontSize: screenWidth * 0.08,
                         fontWeight: "bold",
                         margin: "auto",
                         textAlign: "justify",
                         lineHeight: screenWidth * 0.1
                     }}>
-                        Introduction to{'\n'}Science{'\n'}<Text style={{color: "#fff", fontSize: screenWidth * 0.05}}>Quarter 1 – Module 1</Text>
+                        Introduction to{'\n'}Science{'\n'}<Text style={{color: colors.text, fontSize: screenWidth * 0.05}}>Quarter 1 – Module 1</Text>
                     </Text>
                     <TouchableOpacity
                         key='science101'

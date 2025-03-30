@@ -5,10 +5,13 @@ import { modules } from '../data/modules';
 import { useStore } from '../store/useStore';
 import { Ionicons } from '@expo/vector-icons';
 import { useRef, useState } from 'react';
+import { useTheme } from '@/components/ThemeContext';
 
 export function CustomDrawerContent(props) {
     const selectedModule = useStore((state) => state.selectedModule);
     const setSelectedModule = useStore((state) => state.setSelectedModule);
+
+    const { colors, isDarkMode } = useTheme();
 
     const [openDropdowns, setOpenDropdowns] = useState({});
     const router = useRouter();
@@ -25,6 +28,63 @@ export function CustomDrawerContent(props) {
     const isQuizActive = () => {
         return currentPath === `/quiz`;
     }
+
+    const styles = StyleSheet.create({
+        containerSide: {
+            backgroundColor: isDarkMode ? "#15026B" : "#d9d9d9",
+        },
+        flexView: {
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            paddingHorizontal: 20,
+            paddingVertical: 12,
+            borderBottomWidth: 1,
+            borderBottomColor: "rgba(255, 255, 255, 0.1)",
+        },
+        headerText: {
+            fontSize: 24,
+            fontWeight: "bold",
+            color: colors.text,
+        },
+        closeButton: {
+            padding: 8,
+        },
+        moduleButton: {
+            padding: 16,
+            borderBottomWidth: 1,
+            borderBottomColor: "rgba(255, 255, 255, 0.1)",
+        },
+        activeModuleButton: {
+            backgroundColor: "rgba(224, 105, 0, 0.1)", // Slight orange tint for active module
+        },
+        moduleText: {
+            fontSize: 16,
+            fontWeight: "500",
+            color: colors.text,
+        },
+        lessonContainer: {
+            backgroundColor: "rgba(255, 255, 255, 0.05)",
+            overflowY: "scroll"
+        },
+        lessonButton: {
+            padding: 16,
+            paddingLeft: 32,
+            borderBottomWidth: 1,
+            borderBottomColor: "rgba(255, 255, 255, 0.1)",
+        },
+        activeLessonButton: {
+            backgroundColor: "rgba(224, 105, 0, 0.1)", // Slight orange tint for active lesson
+        },
+        lessonText: {
+            fontSize: 14,
+            color: colors.text,
+        },
+        activeText: {
+            color: "#E06900", // Orange color for active text
+            fontWeight: "600",
+        },
+    });
 
     const dropdownHeights = useRef({}).current;
     const toggleDropdown = (moduleKey, moduleData) => {
@@ -54,7 +114,7 @@ export function CustomDrawerContent(props) {
     };
 
     return (
-        <DrawerContentScrollView {...props} style={styles.container}>
+        <DrawerContentScrollView {...props} style={styles.containerSide}>
             <View style={styles.flexView}>
                 <TouchableOpacity onPress={() => router.push("/")}>
                     <Text style={styles.headerText}>EL</Text>
@@ -145,60 +205,3 @@ export function CustomDrawerContent(props) {
         </DrawerContentScrollView>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "#15026B",
-    },
-    flexView: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        paddingHorizontal: 20,
-        paddingVertical: 12,
-        borderBottomWidth: 1,
-        borderBottomColor: "rgba(255, 255, 255, 0.1)",
-    },
-    headerText: {
-        fontSize: 24,
-        fontWeight: "bold",
-        color: "#fff",
-    },
-    closeButton: {
-        padding: 8,
-    },
-    moduleButton: {
-        padding: 16,
-        borderBottomWidth: 1,
-        borderBottomColor: "rgba(255, 255, 255, 0.1)",
-    },
-    activeModuleButton: {
-        backgroundColor: "rgba(224, 105, 0, 0.1)", // Slight orange tint for active module
-    },
-    moduleText: {
-        fontSize: 16,
-        fontWeight: "500",
-        color: "#fff",
-    },
-    lessonContainer: {
-        backgroundColor: "rgba(255, 255, 255, 0.05)",
-        overflowY: "scroll"
-    },
-    lessonButton: {
-        padding: 16,
-        paddingLeft: 32,
-        borderBottomWidth: 1,
-        borderBottomColor: "rgba(255, 255, 255, 0.1)",
-    },
-    activeLessonButton: {
-        backgroundColor: "rgba(224, 105, 0, 0.1)", // Slight orange tint for active lesson
-    },
-    lessonText: {
-        fontSize: 14,
-        color: "#fff",
-    },
-    activeText: {
-        color: "#E06900", // Orange color for active text
-        fontWeight: "600",
-    },
-});

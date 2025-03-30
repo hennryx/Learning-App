@@ -6,6 +6,7 @@ import { useStore } from '../../../../store/useStore';
 import { useEffect, useRef, useState } from 'react';
 import SpaceBackground from '@/components/SpaceBackground';
 import { Ionicons } from '@expo/vector-icons';
+import { useTheme } from '@/components/ThemeContext';
 
 const imageMap = {
     'figure1.png': require('@/assets/science/figure1.png'),
@@ -27,6 +28,7 @@ export default function LessonScreen() {
     const lesson = module?.lessons.find(l => l.id === lessonId);
     const router = useRouter();
     const scrollViewRef = useRef(null);
+    const { colors, isDarkMode } = useTheme();
 
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
@@ -35,7 +37,7 @@ export default function LessonScreen() {
         setSelectedModule(moduleId);
     }, [moduleId]);
 
-    if (!lesson) return <Text>Lesson not found</Text>;
+    if (!lesson) return <Text style={{ color: colors.text }}>Lesson not found</Text>;
 
     const currentLessonIndex = module.lessons.findIndex(l => l.id === lessonId);
     const previousLesson = module.lessons[currentLessonIndex - 1];
@@ -80,20 +82,183 @@ export default function LessonScreen() {
         }
     };
 
+    // Dynamic styles based on theme
+    const dynamicStyles = StyleSheet.create({
+        container: {
+            flex: 1,
+            backgroundColor: colors.primary,
+        },
+        section: {
+            backgroundColor: isDarkMode ? 'rgba(0, 0, 0, 0.50)' : 'rgba(255, 255, 255, 0.75)',
+            borderRadius: 8,
+            padding: 16,
+        },
+        navigationContainer: {
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            padding: 16,
+            backgroundColor: isDarkMode 
+                ? 'rgba(21, 2, 107, 0.95)' 
+                : 'rgba(255, 255, 255, 0.95)',
+            borderTopWidth: 1,
+            borderTopColor: isDarkMode 
+                ? 'rgba(255, 255, 255, 0.1)' 
+                : 'rgba(0, 0, 0, 0.1)',
+        },
+        navigationButton: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            padding: 12,
+            borderRadius: 8,
+            backgroundColor: isDarkMode 
+                ? 'rgba(224, 105, 0, 0.1)' 
+                : 'rgba(224, 105, 0, 0.2)',
+            minWidth: 120,
+            justifyContent: 'center',
+        },
+        navigationText: {
+            color: colors.accent,
+            fontSize: 16,
+            fontWeight: '600',
+            marginHorizontal: 8,
+        },
+    });
+
+    // Dynamic markdown styles based on theme
+    const dynamicMarkdownStyles = StyleSheet.create({
+        body: {
+            color: colors.text,
+            fontSize: 16,
+            lineHeight: 24,
+            backgroundColor: 'transparent',
+        },
+        heading1: {
+            color: colors.text,
+            fontSize: 24,
+            fontWeight: 'bold',
+            marginVertical: 10,
+            backgroundColor: 'transparent',
+        },
+        heading2: {
+            color: colors.text,
+            fontSize: 20,
+            fontWeight: 'bold',
+            marginVertical: 8,
+            backgroundColor: 'transparent',
+        },
+        heading3: {
+            color: colors.text,
+            fontSize: 18,
+            fontWeight: 'bold',
+            marginVertical: 6,
+            backgroundColor: 'transparent',
+        },
+        heading4: {
+            color: colors.text,
+            fontSize: 16,
+            fontWeight: 'bold',
+            marginVertical: 4,
+            backgroundColor: 'transparent',
+        },
+        heading5: {
+            color: colors.text,
+            fontSize: 14,
+            fontWeight: 'bold',
+            marginVertical: 2,
+            backgroundColor: 'transparent',
+        },
+        heading6: {
+            color: colors.text,
+            fontSize: 12,
+            fontWeight: 'bold',
+            marginVertical: 2,
+            backgroundColor: 'transparent',
+        },
+        paragraph: {
+            color: colors.text,
+            marginVertical: 8,
+            backgroundColor: 'transparent',
+        },
+        listItem: {
+            color: colors.text,
+            marginLeft: 20,
+            backgroundColor: 'transparent',
+        },
+        link: {
+            color: colors.accent,
+            textDecorationLine: 'underline',
+        },
+        code_inline: {
+            color: colors.text,
+            backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+            paddingHorizontal: 5,
+            paddingVertical: 2,
+            borderRadius: 4,
+            fontFamily: 'monospace',
+        },
+        code_block: {
+            backgroundColor: 'transparent',
+            padding: 10,
+            borderRadius: 4,
+            color: colors.text,
+            fontFamily: 'monospace',
+        },
+        table: {
+            borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)',
+            borderWidth: 1,
+        },
+        tr: {
+            borderBottomColor: isDarkMode ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)',
+            borderBottomWidth: 1,
+        },
+        th: {
+            color: colors.text,
+            padding: 8,
+            backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+        },
+        td: {
+            color: colors.text,
+            padding: 8,
+        },
+        hr: {
+            backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)',
+            height: 1,
+            marginVertical: 10,
+        },
+        bullet_list: {
+            color: colors.text,
+        },
+        ordered_list: {
+            color: colors.text,
+        },
+        em: {
+            color: colors.text,
+            fontStyle: 'italic',
+        },
+        del: {
+            color: colors.text,
+            textDecorationLine: 'line-through',
+        },
+    });
+
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, dynamicStyles.container]}>
             <ScrollView style={styles.scrollContainer} ref={scrollViewRef}>
-                <SpaceBackground />
+                {isDarkMode && <SpaceBackground />}
                 <View style={styles.contentContainer}>
-                    <View style={styles.section}>
-                        <Markdown style={{ ...markdownStyles }}>
+                    <View style={[styles.section, dynamicStyles.section]}>
+                        <Markdown style={{ ...dynamicMarkdownStyles }}>
                             {lesson.title}
                         </Markdown>
                     </View>
 
-                    <View style={[styles.section, styles.sectionHeight]}>
+                    <View style={[styles.section, styles.sectionHeight, dynamicStyles.section]}>
                         <Markdown
-                            style={{ ...markdownStyles }}
+                            style={{ ...dynamicMarkdownStyles }}
                             rules={markdownRules}
                         >
                             {lesson.content}
@@ -119,57 +284,56 @@ export default function LessonScreen() {
                 </TouchableWithoutFeedback>
             </Modal>
 
-
-            <View style={styles.navigationContainer}>
+            <View style={[styles.navigationContainer, dynamicStyles.navigationContainer]}>
                 <TouchableOpacity
                     style={[
-                        styles.navigationButton,
+                        dynamicStyles.navigationButton,
                         !previousLesson && styles.navigationButtonDisabled
                     ]}
                     onPress={() => navigateToLesson(previousLesson)}
                     disabled={!previousLesson}
                 >
-                    <Ionicons name="chevron-back" size={24} color={previousLesson ? "#E06900" : "#666"} />
+                    <Ionicons name="chevron-back" size={24} color={previousLesson ? colors.accent : "#666"} />
                     <Text style={[
-                        styles.navigationText,
+                        dynamicStyles.navigationText,
                         !previousLesson && styles.navigationTextDisabled
                     ]}>Previous</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     style={[
-                        styles.navigationButton,
+                        dynamicStyles.navigationButton,
                         !nextLesson && styles.navigationButtonDisabled
                     ]}
                     onPress={() => navigateToLesson(nextLesson)}
                     disabled={!nextLesson}
                 >
                     <Text style={[
-                        styles.navigationText,
+                        dynamicStyles.navigationText,
                         !nextLesson && styles.navigationTextDisabled
                     ]}>Next</Text>
-                    <Ionicons name="chevron-forward" size={24} color={nextLesson ? "#E06900" : "#666"} />
+                    <Ionicons name="chevron-forward" size={24} color={nextLesson ? colors.accent : "#666"} />
                 </TouchableOpacity>
             </View>
         </View>
     );
 }
 
-
+// Keep original static styles
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#15026B',
+    },
+    scrollContainer: {
+        flex: 1,
     },
     contentContainer: {
         paddingBottom: 80,
     },
     section: {
-        backgroundColor: 'rgba(0, 0, 0, 0.50)',
         borderRadius: 8,
         padding: 16,
     },
-
     sectionHeight: {
         height: '100%'
     },
@@ -198,161 +362,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         padding: 16,
-        backgroundColor: 'rgba(21, 2, 107, 0.95)',
-        borderTopWidth: 1,
-        borderTopColor: 'rgba(255, 255, 255, 0.1)',
-    },
-    navigationButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding: 12,
-        borderRadius: 8,
-        backgroundColor: 'rgba(224, 105, 0, 0.1)',
-        minWidth: 120,
-        justifyContent: 'center',
     },
     navigationButtonDisabled: {
         backgroundColor: 'rgba(255, 255, 255, 0.05)',
     },
-    navigationText: {
-        color: '#E06900',
-        fontSize: 16,
-        fontWeight: '600',
-        marginHorizontal: 8,
-    },
     navigationTextDisabled: {
         color: '#666',
     },
-});
-
-const markdownStyles = StyleSheet.create({
-    body: {
-        color: '#fff',
-        fontSize: 16,
-        lineHeight: 24,
-        backgroundColor: 'transparent',
-    },
-    heading1: {
-        color: '#fff',
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginVertical: 10,
-        backgroundColor: 'transparent',
-    },
-    heading2: {
-        color: '#fff',
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginVertical: 8,
-        backgroundColor: 'transparent',
-    },
-    heading3: {
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginVertical: 6,
-        backgroundColor: 'transparent',
-    },
-    heading4: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginVertical: 4,
-        backgroundColor: 'transparent',
-    },
-    heading5: {
-        color: '#fff',
-        fontSize: 14,
-        fontWeight: 'bold',
-        marginVertical: 2,
-        backgroundColor: 'transparent',
-    },
-    heading6: {
-        color: '#fff',
-        fontSize: 12,
-        fontWeight: 'bold',
-        marginVertical: 2,
-        backgroundColor: 'transparent',
-    },
-    paragraph: {
-        color: '#fff',
-        marginVertical: 8,
-        backgroundColor: 'transparent',
-    },
-    listItem: {
-        color: '#fff',
-        marginLeft: 20,
-        backgroundColor: 'transparent',
-    },
-    link: {
-        color: '#E06900',
-        textDecorationLine: 'underline',
-    },
-    /* strong: {
-        color: '#fff',
-        fontWeight: 'bold',
-    },
-    blockquote: {
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        borderLeftColor: '#E06900',
-        borderLeftWidth: 4,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-    }, */
-    code_inline: {
-        color: '#fff',
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        paddingHorizontal: 5,
-        paddingVertical: 2,
-        borderRadius: 4,
-        fontFamily: 'monospace',
-    },
-    code_block: {
-        backgroundColor: 'transparent',
-        padding: 10,
-        borderRadius: 4,
-        color: '#fff',
-        fontFamily: 'monospace',
-    },
-    table: {
-        borderColor: 'rgba(255, 255, 255, 0.2)',
-        borderWidth: 1,
-    },
-    tr: {
-        borderBottomColor: 'rgba(255, 255, 255, 0.2)',
-        borderBottomWidth: 1,
-    },
-    th: {
-        color: '#fff',
-        padding: 8,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    },
-    td: {
-        color: '#fff',
-        padding: 8,
-    },
-    hr: {
-        backgroundColor: 'rgba(255, 255, 255, 0.2)',
-        height: 1,
-        marginVertical: 10,
-    },
-    bullet_list: {
-        color: '#fff',
-    },
-    ordered_list: {
-        color: '#fff',
-    },
-    em: {
-        color: '#fff',
-        fontStyle: 'italic',
-    },
-    del: {
-        color: '#fff',
-        textDecorationLine: 'line-through',
-    },
-    image: {
-        maxWidth: '100%',
-        height: 200,
-        resizeMode: 'contain',
-    }
 });
