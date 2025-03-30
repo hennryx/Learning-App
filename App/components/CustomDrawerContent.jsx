@@ -1,5 +1,5 @@
 import { DrawerContentScrollView } from '@react-navigation/drawer';
-import { View, Text, TouchableOpacity, StyleSheet, Animated, Easing, SafeAreaView, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Animated, Easing } from 'react-native';
 import { useRouter, usePathname } from 'expo-router';
 import { modules } from '../data/modules';
 import { useStore } from '../store/useStore';
@@ -8,9 +8,6 @@ import { useRef, useState } from 'react';
 import { useTheme } from '@/components/ThemeContext';
 
 export function CustomDrawerContent(props) {
-    const selectedModule = useStore((state) => state.selectedModule);
-    const setSelectedModule = useStore((state) => state.setSelectedModule);
-
     const { colors, isDarkMode } = useTheme();
 
     const [openDropdowns, setOpenDropdowns] = useState({});
